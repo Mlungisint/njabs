@@ -54,7 +54,7 @@ public class TestCase1 {
         report = new ExtentReports(System.getProperty("user.dir") + "\\Reports\\TestCase1" + timeStamp + ".html", false);
 
 
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\mlung\\OneDrive\\Documents\\Njabulo\\VPC_PublicWEb_TC1\\Drivers\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\Drivers\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         driver.manage().window().maximize();
@@ -110,11 +110,11 @@ public class TestCase1 {
         System.out.println("page :" + txt);
 
         if (txt.equals("Thank you")){
-            test.log(LogStatus.PASS, "User has been signed up successfully");
+            test.log(LogStatus.PASS, "User has been signed up successfully",test.addScreenCapture(Utilities.Utils.takeSnapShot(driver,"signed in successfully")));
 
         }
         else{
-            test.log(LogStatus.FAIL, "User has not been signed up successfully");
+            test.log(LogStatus.FAIL, "User has not been signed up successfully",test.addScreenCapture(Utilities.Utils.takeSnapShot(driver,"login unsuccessful")));
 
         }
         }catch (Exception e) {

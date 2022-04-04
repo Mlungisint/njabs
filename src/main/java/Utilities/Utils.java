@@ -3,6 +3,7 @@ package Utilities;
 //import PageObjects.LoginObj;
 import Page_Objects.PageElements;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -27,6 +28,7 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
@@ -229,9 +231,6 @@ public class Utils {
         } catch (Exception var3) {
             LOG.info("Unable to catch object see error: " + var3.getMessage());
         }
-
-
-
     }
 
 
@@ -313,6 +312,22 @@ public class Utils {
         }
         return propVal;
 
+    }
+
+    public static String takeSnapShot(WebDriver webdriver, String fileScreenName) throws Exception {
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        timeStamp = timeStamp.replace(".", "_");
+        String Screenshotpath;
+//Convert web driver object to TakeScreenshot
+        TakesScreenshot scrShot = ((TakesScreenshot) webdriver);
+//Call getScreenshotAs method to create image file
+        File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
+//Move image file to new destination
+        Screenshotpath = System.getProperty("user.dir") + "\\Screenshots\\" + fileScreenName + timeStamp + ".png";
+        File DestFile = new File(Screenshotpath);
+//Copy file at destination
+        FileUtils.copyFile(SrcFile, DestFile);
+        return Screenshotpath;
     }
 
 }
